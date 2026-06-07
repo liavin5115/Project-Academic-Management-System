@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, Boolean, DateTime
+from sqlalchemy import Column, Integer, String, Boolean, DateTime, ForeignKey
 from sqlalchemy.orm import relationship
 from datetime import datetime, timedelta
 from ..database import Base
@@ -14,6 +14,7 @@ class User(Base):
     email = Column(String(100), unique=True, index=True, nullable=False)
     password_hash = Column(String(255), nullable=False)
     is_admin = Column(Boolean, default=False)
+    is_verified = Column(Boolean, default=False)
     created_at = Column(DateTime, default=get_gmt7_time)
 
     courses = relationship("Course", back_populates="user", cascade="all, delete-orphan")
@@ -22,3 +23,13 @@ class User(Base):
     materials = relationship("Material", back_populates="user", cascade="all, delete-orphan")
     pomodoros = relationship("PomodoroSession", back_populates="user", cascade="all, delete-orphan")
     gpa_reports = relationship("GPAReport", back_populates="user", cascade="all, delete-orphan")
+
+class VerificationToken(Base):
+    __tablename__ = "verification_tokens"
+    id = Column(Integer, primary_key=True, index=True)
+    user_id = Column(Integer, ForeignKey("users.id", ondelete="CASCADE"), nullable=False)
+    action_type = Column(String(50), nullable=False)
+    token = Column(String(255), index=True, nullable=False)
+    expires_at = Column(DateTime, nullable=False)
+    
+    user = relationship("User")

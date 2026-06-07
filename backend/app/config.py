@@ -12,6 +12,8 @@ class Settings(BaseSettings):
     discord_webhook_url: str = os.getenv("DISCORD_WEBHOOK_URL", "")
     app_user_password: str = os.getenv("APP_USER_PASSWORD", "yourpassword")
     timezone: str = os.getenv("TIMEZONE", "Asia/Jakarta")
+    email_sender_address: str = os.getenv("EMAIL_SENDER_ADDRESS", "")
+    email_app_password: str = os.getenv("EMAIL_APP_PASSWORD", "")
 
     class Config:
         env_file = ".env"
