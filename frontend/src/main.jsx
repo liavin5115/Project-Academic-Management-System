@@ -14,6 +14,7 @@ import Login from './pages/Login'
 import Register from './pages/Register'
 import AdminDashboard from './pages/AdminDashboard'
 import Pomodoro from './pages/Pomodoro'
+import GPACalculator from './pages/GPACalculator'
 import { AuthProvider, useAuth } from './context/AuthContext'
 import './i18n'
 
@@ -58,6 +59,7 @@ function App() {
         <Route path="/materials" element={<ProtectedRoute><Materials /></ProtectedRoute>} />
         <Route path="/settings" element={<ProtectedRoute><Settings /></ProtectedRoute>} />
         <Route path="/pomodoro" element={<ProtectedRoute><Pomodoro /></ProtectedRoute>} />
+        <Route path="/gpa" element={<ProtectedRoute><GPACalculator /></ProtectedRoute>} />
         <Route path="/admin" element={<ProtectedRoute><AdminDashboard /></ProtectedRoute>} />
       </Routes>
     </>

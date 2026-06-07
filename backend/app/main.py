@@ -14,6 +14,7 @@ from .routers import (
     dashboard_router,
     notifications_router,
     settings_router,
+    gpa_router,
 )
 from .routers.pomodoros import router as pomodoros_router
 from .scheduler import start_scheduler
@@ -51,6 +52,7 @@ app.include_router(dashboard_router, prefix="/api")
 app.include_router(notifications_router, prefix="/api")
 app.include_router(settings_router, prefix="/api")
 app.include_router(pomodoros_router, prefix="/api")
+app.include_router(gpa_router, prefix="/api")
 
 
 @app.on_event("startup")

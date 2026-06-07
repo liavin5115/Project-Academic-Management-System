@@ -18,6 +18,7 @@ export default function Courses() {
   const [loading, setLoading] = useState(true)
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [selectedCourse, setSelectedCourse] = useState(null)
+  const [searchQuery, setSearchQuery] = useState('')
   const { t } = useTranslation()
 
   const fetchCourses = () => {
@@ -104,25 +105,44 @@ export default function Courses() {
               <p className="text-lg font-bold text-white leading-none mt-0.5">{calculateGPA()}</p>
             </div>
           </div>
-          <button onClick={handleAdd} className="btn-primary">
+          
+          <div className="relative">
+            <input 
+              type="search" 
+              placeholder="Search courses..." 
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="input-field pl-10 w-full sm:w-64"
+            />
+            <svg className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+            </svg>
+          </div>
+
+          <button onClick={handleAdd} className="btn-primary whitespace-nowrap">
             {t('courses.new')}
           </button>
         </div>
       </div>
 
-      {courses.length === 0 ? (
+      {courses.filter(c => 
+        c.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
+        c.code.toLowerCase().includes(searchQuery.toLowerCase())
+      ).length === 0 ? (
         <div className="glass-card flex flex-col items-center justify-center py-16 text-center">
           <div className="w-20 h-20 rounded-2xl bg-white/5 flex items-center justify-center mb-4">
             <svg className="w-10 h-10 text-slate-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
               <path strokeLinecap="round" strokeLinejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
             </svg>
           </div>
-          <p className="text-slate-400 font-medium">{t('courses.empty')}</p>
-          <p className="text-slate-600 text-sm mt-1">{t('courses.emptyDesc')}</p>
+          <p className="text-slate-400 font-medium">No courses found</p>
         </div>
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {courses.map((course, i) => (
+          {courses.filter(c => 
+            c.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
+            c.code.toLowerCase().includes(searchQuery.toLowerCase())
+          ).map((course, i) => (
             <div
               key={course.id}
               className={`glass-card-hover p-6 bg-gradient-to-br ${COLORS[i % COLORS.length]} animate-slide-up`}
@@ -158,7 +178,7 @@ export default function Courses() {
                 <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8}>
                   <path strokeLinecap="round" strokeLinejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z" />
                 </svg>
-                <span>{(course.lecturer_count || 0) !== 1 ? t('courses.lecturers', { count: course.lecturer_count || 0 }) : t('courses.lecturer', { count: course.lecturer_count || 0 })}</span>
+                <span className="truncate">{course.lecturer_name || 'No Lecturer'}</span>
               </div>
             </div>
           ))}

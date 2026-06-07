@@ -8,6 +8,7 @@ class CourseCreate(BaseModel):
     credits: int = Field(..., ge=1, le=6)
     description: Optional[str] = None
     grade: Optional[str] = None
+    lecturer_name: Optional[str] = None
 
 
 class CourseUpdate(BaseModel):
@@ -16,6 +17,7 @@ class CourseUpdate(BaseModel):
     credits: Optional[int] = Field(None, ge=1, le=6)
     description: Optional[str] = None
     grade: Optional[str] = None
+    lecturer_id: Optional[int] = None
 
 
 class CourseOut(BaseModel):
@@ -26,6 +28,8 @@ class CourseOut(BaseModel):
     description: Optional[str]
     grade: Optional[str] = None
     lecturer_count: int = 0
+    lecturer_name: Optional[str] = None
+    lecturer_id: Optional[int] = None
 
     class Config:
         from_attributes = True

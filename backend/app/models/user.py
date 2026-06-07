@@ -21,3 +21,4 @@ class User(Base):
     schedules = relationship("Schedule", back_populates="user", cascade="all, delete-orphan")
     materials = relationship("Material", back_populates="user", cascade="all, delete-orphan")
     pomodoros = relationship("PomodoroSession", back_populates="user", cascade="all, delete-orphan")
+    gpa_reports = relationship("GPAReport", back_populates="user", cascade="all, delete-orphan")

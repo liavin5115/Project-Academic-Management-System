@@ -9,6 +9,7 @@ from .dashboard import router as dashboard_router
 from .notifications import router as notifications_router
 
 from .settings import router as settings_router
+from .gpa import router as gpa_router
 
 __all__ = [
     "auth_router",
@@ -21,4 +22,5 @@ __all__ = [
     "dashboard_router",
     "notifications_router",
     "settings_router",
+    "gpa_router",
 ]

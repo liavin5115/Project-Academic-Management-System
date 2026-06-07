@@ -11,7 +11,9 @@ export default function CourseModal({ isOpen, onClose, course = null, onSuccess 
     name: '',
     credits: 3,
     description: '',
-    grade: ''
+    description: '',
+    grade: '',
+    lecturer_name: ''
   })
   const [loading, setLoading] = useState(false)
 
@@ -22,22 +24,28 @@ export default function CourseModal({ isOpen, onClose, course = null, onSuccess 
         name: course.name,
         credits: course.credits,
         description: course.description || '',
-        grade: course.grade || ''
+        grade: course.grade || '',
+        lecturer_name: course.lecturer_name || ''
       })
     } else {
-      setFormData({ code: '', name: '', credits: 3, description: '', grade: '' })
+      setFormData({ code: '', name: '', credits: 3, description: '', grade: '', lecturer_name: '' })
     }
   }, [course, isOpen])
 
   const handleSubmit = async (e) => {
     e.preventDefault()
     setLoading(true)
+    
+    // Process payload
+    const payload = { ...formData };
+    if (!payload.lecturer_name) payload.lecturer_name = null;
+    
     try {
       if (course) {
-        await api.put(`/courses/${course.id}`, formData)
+        await api.put(`/courses/${course.id}`, payload)
         toast.success('Course updated')
       } else {
-        await api.post('/courses', formData)
+        await api.post('/courses', payload)
         toast.success('Course created')
       }
       onSuccess()
@@ -93,7 +101,7 @@ export default function CourseModal({ isOpen, onClose, course = null, onSuccess 
             />
           </div>
           <div>
-            <label className="block text-xs font-medium text-slate-400 mb-1.5">Grade (Optional)</label>
+            <label className="block text-xs font-medium text-slate-400 mb-1.5">{t('modal.course.grade', 'Grade (Optional)')}</label>
             <select
               value={formData.grade}
               onChange={e => setFormData({ ...formData, grade: e.target.value })}
@@ -105,6 +113,18 @@ export default function CourseModal({ isOpen, onClose, course = null, onSuccess 
               ))}
             </select>
           </div>
+        </div>
+
+        <div>
+          <label className="block text-xs font-medium text-slate-400 mb-1.5">{t('modal.course.lecturer', 'Lecturer (Optional)')}</label>
+          <input
+            type="text"
+            value={formData.lecturer_name}
+            onChange={e => setFormData({ ...formData, lecturer_name: e.target.value })}
+            className="input-field"
+            placeholder="e.g., Dr. Smith"
+            maxLength={100}
+          />
         </div>
 
         <div>

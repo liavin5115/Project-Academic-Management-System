@@ -41,6 +41,7 @@ ENV/
 env.bak/
 venv.bak/
 backend.db
+ams.db
 .pytest_cache/
 .coverage
 htmlcov/

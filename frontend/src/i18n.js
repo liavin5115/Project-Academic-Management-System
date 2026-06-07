@@ -126,11 +126,13 @@ const resources = {
       "modal.task.save": "Save Task",
       "modal.course.edit": "Edit Course",
       "modal.course.add": "Add New Course",
-      "modal.course.code": "Code *",
-      "modal.course.name": "Name *",
-      "modal.course.credits": "Credits *",
+      "modal.course.code": "Course Code",
+      "modal.course.name": "Course Name",
+      "modal.course.credits": "Credits",
       "modal.course.desc": "Description",
       "modal.course.save": "Save Course",
+      "modal.course.grade": "Grade (Optional)",
+      "modal.course.lecturer": "Lecturer (Optional)",
       "modal.schedule.edit": "Edit Schedule",
       "modal.schedule.add": "Add New Schedule",
       "modal.schedule.day": "Day of Week *",
@@ -177,7 +179,24 @@ const resources = {
       "pomodoro.totalHours": "Total Hours",
       "pomodoro.sessionsCount": "Sessions",
       "pomodoro.history": "Recent Sessions",
-      "pomodoro.noHistory": "No sessions found."
+      "pomodoro.noHistory": "No sessions found.",
+
+      // GPA Calculator
+      "nav.gpa": "GPA Calc",
+      "gpa.title": "GPA Calculator",
+      "gpa.subtitle": "Project your grades and track history",
+      "gpa.calculator": "Calculator",
+      "gpa.noCourses": "No courses added yet. Go to Courses page to add some!",
+      "gpa.credits": "cr",
+      "gpa.projected": "Projected GPA",
+      "gpa.totalCredits": "Total Credits",
+      "gpa.semesterName": "e.g., Fall 2024",
+      "gpa.saving": "Saving...",
+      "gpa.saveReport": "Save Report",
+      "gpa.trend": "GPA Trend",
+      "gpa.noReports": "Save a report to see your trend.",
+      "gpa.history": "History",
+      "gpa.noHistory": "Your saved reports will appear here."
     }
   },
   id: {
@@ -303,11 +322,13 @@ const resources = {
       "modal.task.save": "Simpan Tugas",
       "modal.course.edit": "Edit Mata Kuliah",
       "modal.course.add": "Tambah Mata Kuliah Baru",
-      "modal.course.code": "Kode *",
-      "modal.course.name": "Nama *",
-      "modal.course.credits": "SKS *",
+      "modal.course.code": "Kode Mata Kuliah",
+      "modal.course.name": "Nama Mata Kuliah",
+      "modal.course.credits": "SKS",
       "modal.course.desc": "Deskripsi",
       "modal.course.save": "Simpan Mata Kuliah",
+      "modal.course.grade": "Nilai (Opsional)",
+      "modal.course.lecturer": "Dosen (Opsional)",
       "modal.schedule.edit": "Edit Jadwal",
       "modal.schedule.add": "Tambah Jadwal Baru",
       "modal.schedule.day": "Hari *",
@@ -354,7 +375,24 @@ const resources = {
       "pomodoro.totalHours": "Total Jam",
       "pomodoro.sessionsCount": "Sesi",
       "pomodoro.history": "Sesi Terbaru",
-      "pomodoro.noHistory": "Belum ada sesi."
+      "pomodoro.noHistory": "Belum ada sesi.",
+
+      // GPA Calculator
+      "nav.gpa": "Kalk. IPK",
+      "gpa.title": "Kalkulator IPK",
+      "gpa.subtitle": "Proyeksikan nilai Anda dan lacak riwayatnya",
+      "gpa.calculator": "Kalkulator",
+      "gpa.noCourses": "Belum ada mata kuliah. Pergi ke halaman Mata Kuliah untuk menambah!",
+      "gpa.credits": "sks",
+      "gpa.projected": "Proyeksi IPK",
+      "gpa.totalCredits": "Total SKS",
+      "gpa.semesterName": "contoh: Semester 4",
+      "gpa.saving": "Menyimpan...",
+      "gpa.saveReport": "Simpan Laporan",
+      "gpa.trend": "Tren IPK",
+      "gpa.noReports": "Simpan laporan untuk melihat tren Anda.",
+      "gpa.history": "Riwayat",
+      "gpa.noHistory": "Laporan yang disimpan akan muncul di sini."
     }
   }
 };
