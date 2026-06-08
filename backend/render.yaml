@@ -1,0 +1,45 @@
+services:
+  - type: web
+    name: ams-backend
+    runtime: python
+    buildCommand: pip install -r requirements.txt && alembic upgrade head
+    startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: DATABASE_URL
+        sync: false
+      - key: SECRET_KEY
+        sync: false
+      - key: FRONTEND_URL
+        sync: false
+      - key: NOTIFICATION_CHANNEL
+        value: telegram
+      - key: TELEGRAM_BOT_TOKEN
+        sync: false
+      - key: TELEGRAM_CHAT_ID
+        sync: false
+      - key: DISCORD_WEBHOOK_URL
+        sync: false
+      - key: TIMEZONE
+        value: Asia/Jakarta
+      - key: ACCESS_TOKEN_EXPIRE_MINUTES
+        value: "1440"
+
+  - type: cron
+    name: ams-daily-bot
+    runtime: python
+    buildCommand: pip install -r requirements.txt
+    schedule: "0 7 * * *"
+    startCommand: python -c "from app.services.notification import send_daily_briefing; import asyncio; asyncio.run(send_daily_briefing())"
+    envVars:
+      - key: DATABASE_URL
+        sync: false
+      - key: NOTIFICATION_CHANNEL
+        value: telegram
+      - key: TELEGRAM_BOT_TOKEN
+        sync: false
+      - key: TELEGRAM_CHAT_ID
+        sync: false
+      - key: DISCORD_WEBHOOK_URL
+        sync: false
+      - key: TIMEZONE
+        value: Asia/Jakarta

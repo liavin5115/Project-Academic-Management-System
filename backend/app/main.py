@@ -21,9 +21,14 @@ from .scheduler import start_scheduler
 
 app = FastAPI(title="Academic Management System")
 
+import os
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=[
+        "http://localhost:5173",
+        os.getenv("FRONTEND_URL", ""),
+    ],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -60,3 +65,7 @@ async def startup_event():
     from .database import engine, Base
     Base.metadata.create_all(bind=engine)
     start_scheduler()
+
+@app.get("/health")
+def health_check():
+    return {"status": "ok"}
