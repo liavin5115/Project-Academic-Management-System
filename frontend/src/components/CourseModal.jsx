@@ -11,7 +11,6 @@ export default function CourseModal({ isOpen, onClose, course = null, onSuccess 
     name: '',
     credits: 3,
     description: '',
-    description: '',
     grade: '',
     lecturer_name: ''
   })

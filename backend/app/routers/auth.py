@@ -109,10 +109,21 @@ def generate_otp():
 
 @router.post("/auth/register")
 def register(request: RegisterRequest, db: Session = Depends(get_db)):
-    if db.query(User).filter(User.username == request.username).first():
-        raise HTTPException(status_code=400, detail="Username already registered")
-    if db.query(User).filter(User.email == request.email).first():
-        raise HTTPException(status_code=400, detail="Email already registered")
+    existing_username = db.query(User).filter(User.username == request.username).first()
+    if existing_username:
+        if not existing_username.is_verified:
+            db.delete(existing_username)
+            db.commit()
+        else:
+            raise HTTPException(status_code=400, detail="Username already registered")
+            
+    existing_email = db.query(User).filter(User.email == request.email).first()
+    if existing_email:
+        if not existing_email.is_verified:
+            db.delete(existing_email)
+            db.commit()
+        else:
+            raise HTTPException(status_code=400, detail="Email already registered")
         
     hashed_password = get_password_hash(request.password)
     user = User(username=request.username, email=request.email, password_hash=hashed_password, is_verified=False)
@@ -126,7 +137,11 @@ def register(request: RegisterRequest, db: Session = Depends(get_db)):
     db.add(token_obj)
     db.commit()
     
-    send_otp_email(user.email, code, "verify your registration")
+    success = send_otp_email(user.email, code, "verify your registration")
+    if not success:
+        db.delete(user)
+        db.commit()
+        raise HTTPException(status_code=500, detail="Failed to send verification email. Please try again.")
     
     return {"message": "Registration successful. Please verify your email.", "require_verification": True, "username": user.username}
 
@@ -170,7 +185,10 @@ def resend_verification(request: ResendOTPRequest, db: Session = Depends(get_db)
     db.add(token_obj)
     db.commit()
     
-    send_otp_email(user.email, code, "verify your registration")
+    success = send_otp_email(user.email, code, "verify your registration")
+    if not success:
+        raise HTTPException(status_code=500, detail="Failed to send verification email. Please try again.")
+        
     return {"message": "Verification code sent to your email"}
 
 @router.post("/auth/login", response_model=Token)
